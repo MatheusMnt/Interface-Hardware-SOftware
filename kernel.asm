@@ -1,11 +1,11 @@
 ; comentarios
 
-;TODO o resultado está x3
+
 ORG 0x7C00
 BITS 16
     jmp start
 
-msg: db "a", 0x0D, 0x0A, 0
+msg: db "aeiouVwxyZ", 0x0D, 0x0A, 0
 
 start:
 
@@ -15,12 +15,41 @@ start:
     mov ss, ax
 
     mov si, msg
-    mov cx, 0
+    ;mov ax, 0
     call count_vogal
 
 end:
     jmp $ ; halt
 
+get_vogal:
+    lodsb
+    cmp al, 'a'
+    je count_vogal
+    cmp al, 'A'
+    je count_vogal
+    cmp al, 'e'
+    je count_vogal
+    cmp al, 'E'
+    je count_vogal
+    cmp al, 'i'
+    je count_vogal
+    cmp al, 'I'
+    je count_vogal
+    cmp al, 'o'
+    je count_vogal
+    cmp al, 'O'
+    je count_vogal
+    cmp al, 'u'
+    je count_vogal
+    cmp al, 'U'
+    je count_vogal
+    cmp al, 0
+    je print_number
+    jmp get_vogal
+
+count_vogal:
+   inc cx
+   call get_vogal
 
 print_string:
 .loop:
@@ -35,7 +64,7 @@ print_string:
 
 print_number:
     mov bx, 10
-    mov ax, cx ;; copia o valor de cx para Ax
+    mov ax, cx
     mov cx, 0
 .loop1:
     mov dx, 0
@@ -54,35 +83,6 @@ print_number:
 .done:
     ret
  
-count_vogal:
-    lodsb
-    cmp al, 'a'
-    je count
-    cmp al, 'A'
-    je count
-    cmp al, 'e'
-    je count
-    cmp al, 'E'
-    je count
-    cmp al, 'i'
-    je count
-    cmp al, 'I'
-    je count
-    cmp al, 'o'
-    je count
-    cmp al, 'O'
-    je count
-    cmp al, 'u'
-    je count
-    cmp al, 'U'
-    je count
-    cmp al, 0
-    je print_number
-    
-
-count:
-   inc cx
-   call count_vogal
  
 
  
