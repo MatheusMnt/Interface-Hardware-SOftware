@@ -1,10 +1,11 @@
 ; comentarios
 
+;TODO o resultado está x3
 ORG 0x7C00
 BITS 16
     jmp start
 
-msg: db "hello world", 0x0D, 0x0A, 0
+msg: db "a", 0x0D, 0x0A, 0
 
 start:
 
@@ -14,11 +15,8 @@ start:
     mov ss, ax
 
     mov si, msg
-    call print_string
-
-    xor ax, ax
-    mov ax, 101
-    call print_number
+    mov cx, 0
+    call count_vogal
 
 end:
     jmp $ ; halt
@@ -37,6 +35,7 @@ print_string:
 
 print_number:
     mov bx, 10
+    mov ax, cx ;; copia o valor de cx para Ax
     mov cx, 0
 .loop1:
     mov dx, 0
@@ -55,7 +54,6 @@ print_number:
 .done:
     ret
  
-;TODO corrigir print_number para não zerar cx 
 count_vogal:
     lodsb
     cmp al, 'a'
@@ -70,7 +68,7 @@ count_vogal:
     je count
     cmp al, 'I'
     je count
-    cmp al. 'o'
+    cmp al, 'o'
     je count
     cmp al, 'O'
     je count
